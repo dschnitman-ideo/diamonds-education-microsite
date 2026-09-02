@@ -62,6 +62,10 @@ function buildShell() {
       </div>
       <div class="nav-label">Learning Path</div>
       <nav class="nav" id="nav"></nav>
+      <a class="whatsapp-link" href="${WHATSAPP_GROUP_URL}" target="_blank" rel="noopener noreferrer">
+        ${icon("whatsapp")}
+        <span>Pilot WhatsApp Group</span>
+      </a>
       <div class="sidebar-spacer"></div>
     </aside>
   `);
@@ -186,6 +190,14 @@ function renderWhyMatters(root) {
     <div class="section-block">
       <span class="eyebrow">The Short Version</span>
       <div class="gallery-grid" id="why-matters-grid"></div>
+      <a class="intro-whatsapp" href="${WHATSAPP_GROUP_URL}" target="_blank" rel="noopener noreferrer">
+        <div class="icon-wrap">${icon("whatsapp")}</div>
+        <div class="txt">
+          <h4>Join the Retail Pilot WhatsApp Group</h4>
+          <p>Connect with other associates piloting this training, ask questions, and share feedback.</p>
+        </div>
+        ${icon("arrowRight")}
+      </a>
     </div>
   `;
   const grid = $("#why-matters-grid", root);

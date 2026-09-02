@@ -3,6 +3,9 @@
    All copy here is illustrative training content for the pilot.
    ============================================================ */
 
+// TODO: replace with the real invite link for the retail pilot group before launch.
+const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/REPLACE-WITH-PILOT-GROUP-INVITE-LINK";
+
 const NAV = [
   { id: "pilot-timeline", label: "Pilot Timeline",             icon: "calendar" },
   { id: "why-matters",    label: "Why this Matters",            icon: "bulb" },

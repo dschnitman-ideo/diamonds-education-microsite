@@ -226,6 +226,23 @@ h1, h2, h3, h4 {
 }
 .nav-item svg { width: 20px; height: 20px; flex: none; opacity: 0.85; }
 
+.whatsapp-link {
+  display: flex; align-items: center; gap: var(--space-3);
+  min-height: 48px;
+  padding: var(--space-3) var(--space-4);
+  margin-top: var(--space-3);
+  border-radius: var(--radius-s);
+  background: #E7F6EC;
+  border: 1px solid #CBEBD4;
+  color: #1F7A3F;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background var(--transition), border-color var(--transition);
+}
+.whatsapp-link:hover { background: #D7F0DE; border-color: #B7E2C2; }
+.whatsapp-link svg { width: 20px; height: 20px; flex: none; color: #25D366; }
+
 .sidebar-spacer { flex: 1; }
 
 /* ---- topbar ---- */
@@ -374,6 +391,24 @@ h1, h2, h3, h4 {
   display: flex; align-items: center; justify-content: center;
 }
 .tip-banner .bulb svg { width: 18px; height: 18px; color: var(--rust); }
+
+.intro-whatsapp {
+  display: flex; align-items: center; gap: var(--space-4);
+  background: #E7F6EC; border: 1px solid #CBEBD4; border-radius: var(--radius-m);
+  padding: var(--space-5); margin-top: var(--space-5);
+  text-decoration: none;
+  transition: background var(--transition), border-color var(--transition);
+}
+.intro-whatsapp:hover { background: #D7F0DE; border-color: #B7E2C2; }
+.intro-whatsapp .icon-wrap {
+  width: 44px; height: 44px; border-radius: 50%; background: #fff; flex: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.intro-whatsapp .icon-wrap svg { width: 22px; height: 22px; color: #25D366; }
+.intro-whatsapp .txt { flex: 1; }
+.intro-whatsapp .txt h4 { font-family: var(--font-ui); font-size: 15px; font-weight: 500; margin-bottom: 2px; color: #1F7A3F; }
+.intro-whatsapp .txt p { margin: 0; font-size: 13px; color: var(--ink-soft); }
+.intro-whatsapp > svg { width: 16px; height: 16px; color: #1F7A3F; flex: none; }
 .tip-banner .tip-label { font-size: 10.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
 .tip-banner p { margin: var(--space-1) 0 0; font-size: 14px; color: var(--ink); }
 
