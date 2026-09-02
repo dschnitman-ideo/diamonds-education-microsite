@@ -79,12 +79,14 @@ function buildShell() {
     </header>
   `);
 
+  const tabbar = h(`<nav class="mobile-tabbar" id="mobile-tabbar"></nav>`);
   const main = h(`<main class="main" id="main"></main>`);
   const scrim = h(`<div class="scrim" id="scrim"></div>`);
 
-  app.append(sidebar, topbar, main, scrim);
+  app.append(sidebar, topbar, tabbar, main, scrim);
 
   const navEl = $("#nav");
+  const tabbarEl = $("#mobile-tabbar");
   NAV.forEach(item => {
     const btn = h(`
       <button class="nav-item" data-id="${item.id}">
@@ -94,6 +96,14 @@ function buildShell() {
     `);
     btn.addEventListener("click", () => { location.hash = item.id; closeSidebarMobile(); });
     navEl.appendChild(btn);
+
+    const tab = h(`
+      <button class="mobile-tab" data-id="${item.id}">
+        ${icon(item.icon)}<span>${item.label}</span>
+      </button>
+    `);
+    tab.addEventListener("click", () => { location.hash = item.id; });
+    tabbarEl.appendChild(tab);
   });
 
   $("#hamburger").addEventListener("click", () => {
@@ -110,9 +120,11 @@ function closeSidebarMobile() {
 }
 
 function updateChrome(activeId) {
-  $all(".nav-item").forEach(b => {
+  $all(".nav-item, .mobile-tab").forEach(b => {
     b.classList.toggle("active", b.dataset.id === activeId);
   });
+  const activeTab = $(`.mobile-tab[data-id="${activeId}"]`);
+  if (activeTab) activeTab.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
   const activeNav = NAV.find(n => n.id === activeId) || NAV[0];
   $("#topbar-title").innerHTML = `${icon(activeNav.icon)}<span class="long">${activeNav.label}</span>`;
 }
@@ -227,7 +239,6 @@ function renderBasics(root) {
     <div class="section-block">
       <span class="eyebrow">Start Learning</span>
       <div class="card-grid" id="basics-grid"></div>
-      <div id="basics-detail"></div>
       <div class="tip-banner">
         <div class="bulb">${icon("bulb")}</div>
         <div>
@@ -240,7 +251,6 @@ function renderBasics(root) {
     </div>
   `;
   const grid = $("#basics-grid", root);
-  const detailEl = $("#basics-detail", root);
 
   const TOPIC_ART = {
     formation: "assets/basics-01-formation.jpg",
@@ -266,33 +276,28 @@ function renderBasics(root) {
       card.addEventListener("click", () => {
         state.basicsOpen = opened ? null : t.id;
         draw();
-        drawDetail();
         updateChrome("basics");
       });
       grid.appendChild(card);
+
+      if (opened) {
+        const detail = h(`
+          <div class="topic-detail">
+            <button class="close-x">${icon("x")}</button>
+            <h4>${t.title}</h4>
+            <p>${t.body}</p>
+          </div>
+        `);
+        $(".close-x", detail).addEventListener("click", (e) => {
+          e.stopPropagation();
+          state.basicsOpen = null;
+          draw();
+        });
+        grid.appendChild(detail);
+      }
     });
-  }
-  function drawDetail() {
-    detailEl.innerHTML = "";
-    const t = BASICS_TOPICS.find(t => t.id === state.basicsOpen);
-    if (!t) return;
-    const detail = h(`
-      <div class="topic-detail">
-        <button class="close-x">${icon("x")}</button>
-        <h4>${t.title}</h4>
-        <p>${t.body}</p>
-      </div>
-    `);
-    $(".close-x", detail).addEventListener("click", (e) => {
-      e.stopPropagation();
-      state.basicsOpen = null;
-      draw();
-      drawDetail();
-    });
-    detailEl.appendChild(detail);
   }
   draw();
-  drawDetail();
   $("#basics-quiz-link", root).addEventListener("click", () => location.hash = "talk");
 }
 
@@ -640,7 +645,6 @@ function renderListen(root) {
       </div>
     </div>
     <div id="ep-list"></div>
-    <p style="font-size:12px;color:var(--ink-soft);margin-top:14px;">Preview only: playback here is a simulated demo since no audio files are wired up yet. Drop real episode audio into <code>/assets/audio</code> and swap in an <code>&lt;audio&gt;</code> element to go live.</p>
   `;
 
   const listEl = $("#ep-list", root);
