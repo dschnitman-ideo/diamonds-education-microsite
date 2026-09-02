@@ -7,8 +7,7 @@
 const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/REPLACE-WITH-PILOT-GROUP-INVITE-LINK";
 
 const NAV = [
-  { id: "pilot-timeline", label: "Pilot Timeline",             icon: "calendar" },
-  { id: "why-matters",    label: "Why this Matters",            icon: "bulb" },
+  { id: "pilot-overview", label: "Pilot Overview",             icon: "bulb" },
   { id: "basics",       label: "Diamond Basics",              icon: "diamond" },
   { id: "compare",      label: "Natural vs. Lab-Grown",        icon: "scale" },
   { id: "journey",      label: "From Rough to Radiance",       icon: "mountain" },

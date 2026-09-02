@@ -131,8 +131,7 @@ function updateChrome(activeId) {
 
 /* ============================================================ router */
 const RENDERERS = {
-  "pilot-timeline": renderPilotTimeline,
-  "why-matters": renderWhyMatters,
+  "pilot-overview": renderPilotOverview,
   basics: renderBasics,
   compare: renderCompare,
   journey: renderJourney,
@@ -156,19 +155,49 @@ function route() {
   main.scrollTop = 0;
 }
 
-/* ============================================================ 0a. Pilot Timeline */
-function renderPilotTimeline(root) {
+/* ============================================================ 0. Pilot Overview */
+function renderPilotOverview(root) {
   root.innerHTML = `
     <div class="hero">
       <div>
-        <span class="eyebrow">Pilot Timeline</span>
-        <h1>Where we are in the pilot.</h1>
-        <p>This training rolls out to select stores in phases. Here's what to expect and when.</p>
+        <span class="eyebrow">Pilot Overview</span>
+        <h1>Why we're investing in natural diamond training.</h1>
+        <p>${WHY_MATTERS.intro}</p>
       </div>
       <div></div>
     </div>
-    <div class="journey" id="pilot-timeline-list"></div>
+    <div class="section-block">
+      <span class="eyebrow">The Short Version</span>
+      <div class="gallery-grid" id="why-matters-grid"></div>
+    </div>
+    <div class="section-block">
+      <span class="eyebrow">Pilot Timeline</span>
+      <h2>Where we are in the pilot.</h2>
+      <p class="desc">This training rolls out to select stores in phases. Here's what to expect and when.</p>
+      <div class="journey" id="pilot-timeline-list"></div>
+    </div>
+    <a class="intro-whatsapp" href="${WHATSAPP_GROUP_URL}" target="_blank" rel="noopener noreferrer">
+      <div class="icon-wrap">${icon("whatsapp")}</div>
+      <div class="txt">
+        <h4>Join the Retail Pilot WhatsApp Group</h4>
+        <p>Connect with other associates piloting this training, ask questions, and share feedback.</p>
+      </div>
+      ${icon("arrowRight")}
+    </a>
   `;
+
+  const grid = $("#why-matters-grid", root);
+  WHY_MATTERS.reasons.forEach(r => {
+    const card = h(`
+      <div class="spec-card">
+        <div class="icon-wrap">${icon(r.icon)}</div>
+        <h4>${r.title}</h4>
+        <div class="sub">${r.sub}</div>
+      </div>
+    `);
+    grid.appendChild(card);
+  });
+
   const wrap = $("#pilot-timeline-list", root);
   PILOT_TIMELINE.forEach((step, i) => {
     const el = h(`
@@ -185,43 +214,6 @@ function renderPilotTimeline(root) {
       </div>
     `);
     wrap.appendChild(el);
-  });
-}
-
-/* ============================================================ 0b. Why this Matters */
-function renderWhyMatters(root) {
-  root.innerHTML = `
-    <div class="hero">
-      <div>
-        <span class="eyebrow">Why this Matters</span>
-        <h1>Why we're investing in natural diamond training.</h1>
-        <p>${WHY_MATTERS.intro}</p>
-      </div>
-      <div></div>
-    </div>
-    <div class="section-block">
-      <span class="eyebrow">The Short Version</span>
-      <div class="gallery-grid" id="why-matters-grid"></div>
-      <a class="intro-whatsapp" href="${WHATSAPP_GROUP_URL}" target="_blank" rel="noopener noreferrer">
-        <div class="icon-wrap">${icon("whatsapp")}</div>
-        <div class="txt">
-          <h4>Join the Retail Pilot WhatsApp Group</h4>
-          <p>Connect with other associates piloting this training, ask questions, and share feedback.</p>
-        </div>
-        ${icon("arrowRight")}
-      </a>
-    </div>
-  `;
-  const grid = $("#why-matters-grid", root);
-  WHY_MATTERS.reasons.forEach(r => {
-    const card = h(`
-      <div class="spec-card">
-        <div class="icon-wrap">${icon(r.icon)}</div>
-        <h4>${r.title}</h4>
-        <div class="sub">${r.sub}</div>
-      </div>
-    `);
-    grid.appendChild(card);
   });
 }
 
