@@ -4,6 +4,8 @@
    ============================================================ */
 
 const NAV = [
+  { id: "pilot-timeline", label: "Pilot Timeline",             icon: "calendar" },
+  { id: "why-matters",    label: "Why this Matters",            icon: "bulb" },
   { id: "basics",       label: "Diamond Basics",              icon: "diamond" },
   { id: "compare",      label: "Natural vs. Lab-Grown",        icon: "scale" },
   { id: "journey",      label: "From Rough to Radiance",       icon: "mountain" },
@@ -13,12 +15,66 @@ const NAV = [
   { id: "listen",       label: "Listen & Learn",                icon: "headphones" },
 ];
 
-const LEVELS = [
-  { name: "Diamond Rookie",   min: 0,    max: 300  },
-  { name: "Diamond Explorer", min: 300,  max: 800  },
-  { name: "Diamond Expert",   min: 800,  max: 1600 },
-  { name: "Diamond Master",   min: 1600, max: 2400 },
+/* ---------------- Pilot Timeline ---------------- */
+const PILOT_TIMELINE = [
+  {
+    when: "Phase 1 — Complete",
+    title: "Pilot Kickoff",
+    summary: "Pilot stores selected and enrolled; this training microsite launched for associates.",
+    status: "done",
+  },
+  {
+    when: "Phase 2 — Now",
+    title: "Training & Practice",
+    summary: "Associates work through Diamond Basics, Natural vs. Lab-Grown, and Talk Diamonds scenarios at their own pace.",
+    status: "current",
+  },
+  {
+    when: "Phase 3 — Upcoming",
+    title: "On-Floor Application",
+    summary: "Associates apply training in real customer conversations; feedback is gathered from store leads.",
+    status: "upcoming",
+  },
+  {
+    when: "Phase 4 — Upcoming",
+    title: "Review & Iterate",
+    summary: "Pilot results and feedback are reviewed to refine the content and scenarios.",
+    status: "upcoming",
+  },
+  {
+    when: "Phase 5 — Upcoming",
+    title: "Full Rollout",
+    summary: "Updated training rolls out beyond the pilot stores to the wider retail team.",
+    status: "upcoming",
+  },
 ];
+
+/* ---------------- Why this Matters ---------------- */
+const WHY_MATTERS = {
+  intro: "Customers increasingly ask about natural vs. lab-grown diamonds. Associates who can speak to that difference with confidence sell better and build more trust.",
+  reasons: [
+    {
+      icon: "diamond",
+      title: "Customers are asking",
+      sub: "Lab-grown diamonds are more visible than ever, and shoppers want a knowledgeable answer, not a sales pitch.",
+    },
+    {
+      icon: "chat",
+      title: "Confidence closes sales",
+      sub: "Associates who understand the story behind a natural diamond can answer tough questions without hesitating.",
+    },
+    {
+      icon: "scale",
+      title: "The facts favor us",
+      sub: "Rarity, geologic history, and long-term value are real differentiators once you know how to explain them simply.",
+    },
+    {
+      icon: "star",
+      title: "It's a pilot, not a policy",
+      sub: "Your feedback during this pilot shapes what the final training looks like company-wide.",
+    },
+  ],
+};
 
 /* ---------------- Diamond Basics ---------------- */
 const BASICS_TOPICS = [
@@ -28,7 +84,6 @@ const BASICS_TOPICS = [
     title: "Formation",
     sub: "Diamonds form deep within the Earth under extreme heat and pressure.",
     icon: "mountain",
-    xp: 10,
     body: "Roughly 100 to 200 miles below the surface, carbon is exposed to temperatures over 2,000°F and pressure 50,000 times that of the atmosphere at sea level. Over the course of 1 to 3 billion years, that carbon slowly crystallizes into a diamond. By the time one reaches a customer's hand, it's already older than most life on Earth.",
   },
   {
@@ -37,7 +92,6 @@ const BASICS_TOPICS = [
     title: "Kimberlite Eruptions",
     sub: "Volcanic eruptions bring diamonds to the surface in kimberlite rock.",
     icon: "volcano",
-    xp: 10,
     body: "Diamonds don't travel to the surface gently. Rare, violent volcanic eruptions, moving faster than the speed of sound, punch narrow pipes of kimberlite rock up from the mantle, carrying diamonds along for the ride. These kimberlite pipes are the reason diamond mines are found in only a handful of places on Earth.",
   },
   {
@@ -46,7 +100,6 @@ const BASICS_TOPICS = [
     title: "Rough Diamonds",
     sub: "Rough diamonds are sorted by size, quality, and potential before cutting.",
     icon: "diamond",
-    xp: 10,
     body: "A rough diamond straight out of the ground looks more like a cloudy pebble than a gem. Expert sorters evaluate thousands of stones by size, shape, clarity, and color to decide how each one should eventually be cut, a decision that can take weeks of planning for a single larger stone.",
   },
   {
@@ -55,7 +108,6 @@ const BASICS_TOPICS = [
     title: "The 4Cs",
     sub: "The universal standard for evaluating diamond quality: Cut, Color, Clarity, Carat.",
     icon: "gem",
-    xp: 10,
     body: "Cut determines how well a diamond reflects light; it's the biggest driver of sparkle. Color measures the presence of a yellow or brown tint on a scale from D (colorless) to Z. Clarity grades natural inclusions formed during growth. Carat is simply weight. All four work together, and a well-cut diamond with a lower carat can outshine a poorly cut, larger one.",
   },
 ];

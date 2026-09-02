@@ -6,8 +6,6 @@ const STORAGE_KEY = "nd-training-state-v1";
 
 function defaultState() {
   return {
-    xp: 0,
-    earned: {},          // dedupe key -> true, so xp is only ever awarded once per action
     basicsOpen: null,
     compareTab: "formation",
     compareViewed: {},
@@ -40,22 +38,6 @@ function loadState() {
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
-function award(key, amount) {
-  if (state.earned[key]) return false;
-  state.earned[key] = true;
-  state.xp += amount;
-  saveState();
-  return true;
-}
-function computeLevel(xp) {
-  let lvl = LEVELS[LEVELS.length - 1];
-  for (const l of LEVELS) {
-    if (xp >= l.min && xp < l.max) { lvl = l; break; }
-  }
-  if (xp >= LEVELS[LEVELS.length - 1].max) lvl = LEVELS[LEVELS.length - 1];
-  return lvl;
-}
-
 /* ---------------- DOM helpers ---------------- */
 function h(html) {
   const t = document.createElement("template");
@@ -73,12 +55,14 @@ function buildShell() {
     <aside class="sidebar" id="sidebar">
       <div class="brand">
         ${icon("crown")}
-        <span class="brand-word">Natural Diamonds</span>
+        <div class="brand-text">
+          <span class="brand-word">Natural Diamonds</span>
+          <span class="brand-tag">Pilot</span>
+        </div>
       </div>
       <div class="nav-label">Learning Path</div>
       <nav class="nav" id="nav"></nav>
       <div class="sidebar-spacer"></div>
-      <div class="level-card" id="level-card"></div>
     </aside>
   `);
 
@@ -87,7 +71,6 @@ function buildShell() {
       <button class="hamburger" id="hamburger" aria-label="Menu">${icon("menu")}</button>
       <div class="topbar-title" id="topbar-title"></div>
       <div class="topbar-spacer"></div>
-      <div class="pts-chip">${icon("trophy")}<span id="pts-value">0 pts</span></div>
       <div class="avatar" title="You">${icon("user")}</div>
     </header>
   `);
@@ -128,25 +111,12 @@ function updateChrome(activeId) {
   });
   const activeNav = NAV.find(n => n.id === activeId) || NAV[0];
   $("#topbar-title").innerHTML = `${icon(activeNav.icon)}<span class="long">${activeNav.label}</span>`;
-
-  const lvl = computeLevel(state.xp);
-  $("#pts-value").textContent = `${state.xp} pts`;
-
-  const idx = LEVELS.indexOf(lvl);
-  const bandWidth = lvl.max - lvl.min;
-  const bandXp = Math.min(state.xp - lvl.min, bandWidth);
-  const pct = Math.max(4, Math.min(100, Math.round((bandXp / bandWidth) * 100)));
-  $("#level-card").innerHTML = `
-    <div class="level-badge">${icon("star")}</div>
-    <div class="level-name">${lvl.name}</div>
-    <div class="level-sub">Level ${idx + 1}</div>
-    <div class="level-bar-track"><div class="level-bar-fill" style="width:${pct}%"></div></div>
-    <div class="level-xp">${bandXp} / ${bandWidth} XP</div>
-  `;
 }
 
 /* ============================================================ router */
 const RENDERERS = {
+  "pilot-timeline": renderPilotTimeline,
+  "why-matters": renderWhyMatters,
   basics: renderBasics,
   compare: renderCompare,
   journey: renderJourney,
@@ -168,6 +138,67 @@ function route() {
   RENDERERS[target](view, sub);
   updateChrome(target);
   main.scrollTop = 0;
+}
+
+/* ============================================================ 0a. Pilot Timeline */
+function renderPilotTimeline(root) {
+  root.innerHTML = `
+    <div class="hero">
+      <div>
+        <span class="eyebrow">Pilot Timeline</span>
+        <h1>Where we are in the pilot.</h1>
+        <p>This training rolls out to select stores in phases. Here's what to expect and when.</p>
+      </div>
+      <div></div>
+    </div>
+    <div class="journey" id="pilot-timeline-list"></div>
+  `;
+  const wrap = $("#pilot-timeline-list", root);
+  PILOT_TIMELINE.forEach((step, i) => {
+    const el = h(`
+      <div class="journey-step ${step.status === "current" ? "active" : ""} ${step.status === "done" ? "done" : ""}">
+        <div class="journey-rail">
+          <div class="journey-dot">${i + 1}</div>
+          <div class="journey-line"></div>
+        </div>
+        <div class="journey-body">
+          <span class="step-eyebrow">${step.when}</span>
+          <h3>${step.title}</h3>
+          <p class="sub">${step.summary}</p>
+        </div>
+      </div>
+    `);
+    wrap.appendChild(el);
+  });
+}
+
+/* ============================================================ 0b. Why this Matters */
+function renderWhyMatters(root) {
+  root.innerHTML = `
+    <div class="hero">
+      <div>
+        <span class="eyebrow">Why this Matters</span>
+        <h1>Why we're investing in natural diamond training.</h1>
+        <p>${WHY_MATTERS.intro}</p>
+      </div>
+      <div></div>
+    </div>
+    <div class="section-block">
+      <span class="eyebrow">The Short Version</span>
+      <div class="gallery-grid" id="why-matters-grid"></div>
+    </div>
+  `;
+  const grid = $("#why-matters-grid", root);
+  WHY_MATTERS.reasons.forEach(r => {
+    const card = h(`
+      <div class="spec-card">
+        <div class="icon-wrap">${icon(r.icon)}</div>
+        <h4>${r.title}</h4>
+        <div class="sub">${r.sub}</div>
+      </div>
+    `);
+    grid.appendChild(card);
+  });
 }
 
 /* ============================================================ 1. Diamond Basics */
@@ -222,7 +253,6 @@ function renderBasics(root) {
       `);
       card.addEventListener("click", () => {
         state.basicsOpen = opened ? null : t.id;
-        award("basics:" + t.id, t.xp);
         draw();
         drawDetail();
         updateChrome("basics");
@@ -300,7 +330,6 @@ function renderCompare(root) {
 
   COMPARE_TABS.forEach(t => {
     state.compareViewed[t.id] = true;
-    award("compare:" + t.id, 5);
   });
   saveState();
   updateChrome("compare");
@@ -342,7 +371,6 @@ function renderJourney(root) {
       const activate = () => {
         state.journeyOpen = active ? null : step.id;
         state.journeyViewed[step.id] = true;
-        award("journey:" + step.id, 5);
         draw();
         updateChrome("journey");
       };
@@ -398,7 +426,6 @@ function renderFieldGuide(root) {
       `);
       card.addEventListener("click", () => {
         state.fieldViewed[key] = true;
-        award("field:" + key, 2);
         draw();
         updateChrome("field-guide");
       });
@@ -482,7 +509,6 @@ function renderTalk(root) {
       btn.addEventListener("click", () => {
         const correct = opt.correct;
         state.talkAnswers[state.talkIndex] = { chosen: i, correct };
-        if (correct) award("talk:" + state.talkIndex, 20);
         saveState();
         drawOptions();
         drawFeedback();
@@ -568,7 +594,6 @@ function renderStories(root, storyId) {
 
 function renderStoryDetail(root, story) {
   state.storiesRead[story.id] = true;
-  award("story:" + story.id, 5);
   saveState();
 
   root.innerHTML = `
@@ -660,7 +685,6 @@ function renderListen(root) {
       state.episodeProgress[i] = p;
       if (p >= 1) {
         state.episodesDone[i] = true;
-        award("episode:" + i, 5);
         stopTimer();
         const next = i + 1;
         state.nowPlaying = (state.playAllMode && next < EPISODES.length) ? next : null;

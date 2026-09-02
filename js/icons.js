@@ -21,6 +21,7 @@ const ICONS = {
   star: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.8 9.2L20 11L13.8 12.8L12 19L10.2 12.8L4 11L10.2 9.2L12 3Z"/></svg>`,
 
   bulb: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18H15M10 21H14M7 10A5 5 0 1 1 15.8 13.5C15.2 14.2 14.7 14.9 14.6 15.5C14.5 16 14.3 16.5 13.5 16.5H10.5C9.7 16.5 9.5 16 9.4 15.5C9.3 14.9 8.8 14.2 8.2 13.5A5 5 0 0 1 7 10Z"/></svg>`,
+  calendar: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5H20.5M8 3V6.5M16 3V6.5"/></svg>`,
 
   arrowRight: `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12H19M13 6L19 12L13 18"/></svg>`,
 

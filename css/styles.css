@@ -172,12 +172,21 @@ h1, h2, h3, h4 {
   padding: var(--space-1) var(--space-2) var(--space-8);
 }
 .brand svg { width: 28px; height: 28px; flex: none; }
+.brand-text { display: flex; flex-direction: column; gap: 2px; }
 .brand-word {
   font-family: var(--font-ui);
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+.brand-tag {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
 .nav-label {
   font-size: 11px;
@@ -219,35 +228,6 @@ h1, h2, h3, h4 {
 
 .sidebar-spacer { flex: 1; }
 
-.level-card {
-  background: var(--bg-panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-m);
-  padding: var(--space-5);
-  text-align: center;
-  margin-top: var(--space-4);
-}
-.level-badge {
-  width: 52px; height: 52px;
-  margin: 0 auto var(--space-2);
-  border-radius: 50%;
-  background: var(--rust-soft);
-  display: flex; align-items: center; justify-content: center;
-}
-.level-badge svg { width: 26px; height: 26px; color: var(--rust); }
-.level-name { font-weight: 500; font-size: 14px; }
-.level-sub { font-size: 12px; color: var(--ink-soft); margin-top: var(--space-1); }
-.level-bar-track {
-  height: 6px; border-radius: 4px; background: var(--line);
-  margin: var(--space-3) 0 var(--space-2); overflow: hidden;
-}
-.level-bar-fill {
-  height: 100%; border-radius: 4px;
-  background: var(--rust);
-  transition: width 0.4s ease;
-}
-.level-xp { font-size: 11px; color: var(--ink-soft); font-weight: 500; }
-
 /* ---- topbar ---- */
 .topbar {
   grid-area: topbar;
@@ -267,13 +247,6 @@ h1, h2, h3, h4 {
 }
 .topbar-title svg { width: 16px; height: 16px; color: var(--accent); }
 .topbar-spacer { flex: 1; }
-.pts-chip {
-  display: flex; align-items: center; gap: var(--space-2);
-  color: var(--ink);
-  font-weight: 500;
-  font-size: 14px;
-}
-.pts-chip svg { width: 15px; height: 15px; color: var(--accent); }
 .avatar {
   width: 38px; height: 38px; border-radius: 50%;
   background: var(--rust-soft);
